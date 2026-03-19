@@ -148,4 +148,17 @@ Colors Console::BackColor()
 	return backColor;
 }
 
+int Console::GetChar()
+{
+	int key{ _getch() };
+	if (key == 0 || key == 0xE0)
+		key = _getch();
+	return key;
+}
+
+int Console::KeyPressed()
+{
+	return _kbhit();
+}
+
 

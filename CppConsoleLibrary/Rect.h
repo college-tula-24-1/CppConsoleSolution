@@ -4,6 +4,7 @@
 
 class Rect
 {
+protected:
 	Point position;
 	Size size;
 	Colors backColor;

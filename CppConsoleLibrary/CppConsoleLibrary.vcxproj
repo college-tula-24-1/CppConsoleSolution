@@ -130,11 +130,15 @@
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="CppConsoleLibrary.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="RectangleView.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="RectangleView.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
