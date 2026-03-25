@@ -1,8 +1,6 @@
 #pragma once
-#include <string>
-#include <Windows.h> // WinAPI
 
-struct Point
+struct Position
 {
 	int row;
 	int column;
@@ -43,12 +41,9 @@ enum class BorderStyle
 
 struct Border
 {
-	static int Single[11];
-	static int Double[11];
+	int Single[11]{ 218, 194, 191, 195, 197, 180, 192, 193, 217, 196, 179 };
+	int Double[11]{ 201, 203, 187, 204, 206, 185, 200, 202, 188, 205, 186 };
 };
-
-int Border::Single[]{ 218, 194, 191, 195, 197, 180, 192, 193, 217, 196, 179 };
-int Border::Double[]{ 201, 203, 187, 204, 206, 185, 200, 202, 188, 205, 186 };
 
 enum class BorderIndex
 {
@@ -65,5 +60,3 @@ enum class BorderIndex
 	Vertical,
 	Cross = 4
 };
-
-

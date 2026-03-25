@@ -32,7 +32,7 @@ void Console::Clear()
 	system("cls");
 }
 
-void Console::CursorPosition(Point position)
+void Console::CursorPosition(Position position)
 {
 	COORD coord{ position.column, position.row };
 	SetConsoleCursorPosition(this->descriptorOutput, coord);
@@ -40,13 +40,13 @@ void Console::CursorPosition(Point position)
 
 void Console::CursorPosition(int row, int column)
 {
-	this->CursorPosition(Point{ row, column });
+	this->CursorPosition(Position{ row, column });
 }
 
-Point Console::CursorPosition()
+Position Console::CursorPosition()
 {
 	COORD coord{ GetCursorCoord() };
-	return Point{ coord.Y, coord.X };
+	return Position{ coord.Y, coord.X };
 }
 
 int Console::RowPosition()
@@ -102,18 +102,18 @@ void Console::Write(char symbol)
 	this->Write(std::string(1, symbol));
 }
 
-void Console::WritePosition(Point position, std::string message)
+void Console::WritePosition(Position position, std::string message)
 {
 	this->WritePosition(position, message.c_str());
 }
 
-void Console::WritePosition(Point position, const char* message)
+void Console::WritePosition(Position position, const char* message)
 {
 	this->CursorPosition(position);
 	this->Write(message);
 }
 
-void Console::WritePosition(Point position, char symbol)
+void Console::WritePosition(Position position, char symbol)
 {
 	this->WritePosition(position, std::string(1, symbol));
 }

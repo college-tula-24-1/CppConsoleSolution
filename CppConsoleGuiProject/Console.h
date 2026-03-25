@@ -1,6 +1,10 @@
 #pragma once
-#include "Types.h"
+
+#include <Windows.h>
+#include <string>
 #include <conio.h>
+
+#include "Types.h"
 
 class Console
 {
@@ -18,9 +22,9 @@ public:
 
 	void Clear();
 
-	void CursorPosition(Point);
+	void CursorPosition(Position);
 	void CursorPosition(int, int);
-	Point CursorPosition();
+	Position CursorPosition();
 	int RowPosition();
 	int ColumnPosition();
 
@@ -33,9 +37,9 @@ public:
 	void Write(std::string);
 	void Write(char);
 
-	void WritePosition(Point, std::string);
-	void WritePosition(Point, const char*);
-	void WritePosition(Point, char);
+	void WritePosition(Position, std::string);
+	void WritePosition(Position, const char*);
+	void WritePosition(Position, char);
 
 	void ForeColor(Colors);
 	Colors ForeColor();
