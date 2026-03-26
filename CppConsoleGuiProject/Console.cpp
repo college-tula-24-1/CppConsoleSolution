@@ -17,12 +17,12 @@ Console::Console(std::string title)
 	SetConsoleTitleA(this->title.c_str());
 }
 
-HANDLE Console::DescriptorOutput() const
+HANDLE Console::DescriptorOutput()
 {
 	return this->descriptorOutput;
 }
 
-HANDLE Console::DescriptorInput() const
+HANDLE Console::DescriptorInput()
 {
 	return this->descriptorInput;
 }

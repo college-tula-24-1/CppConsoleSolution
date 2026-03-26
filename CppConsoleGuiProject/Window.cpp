@@ -47,3 +47,6 @@ Window::Window(Position position,
 	: View(position, size, backColor, foreColor),
 	title{ title },
 	style{ style }{}
+
+Window::Window()
+	: Window({}, {}, Colors::Black, Colors::White, "", BorderStyle::None) {}

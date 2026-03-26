@@ -6,7 +6,7 @@
 
 class Game
 {
-	std::array<Player*, 2> players;
+	std::array<Player*, 2> players{};
 	bool currentPlayer{ false };
 
 	Platform* platform;

@@ -2,9 +2,10 @@
 #include "View.h"
 class Window : public View
 {
+protected:
 	std::string title;
 	BorderStyle style;
-protected:
+
 	void BufferViewedInit() override;
 public:
 	Window(Position position,
@@ -14,6 +15,6 @@ public:
 		std::string title,
 		BorderStyle style);
 
-
+	Window();
 };
 

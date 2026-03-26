@@ -60,3 +60,4 @@ enum class BorderIndex
 	Vertical,
 	Cross = 4
 };
+

@@ -1,7 +1,6 @@
 #include "View.h"
 
 Console* View::console = new Console();
-int View::globalId = 0;
 
 void View::BufferViewedInit()
 {
@@ -36,8 +35,7 @@ View::View(Position position,
 	Size size,
 	Colors backColor, 
 	Colors foreColor)
-	: id{ ++globalId },
-	position { position },
+	: position { position },
 	size{ size },
 	backColor{ backColor },
 	foreColor{ foreColor }
@@ -58,11 +56,6 @@ View::~View()
 	delete[] bufferSaved;
 }
 
-
-int View::Id() const
-{
-	return this->id;
-}
 
 Console* View::GetConsole()
 {

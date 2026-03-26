@@ -5,9 +5,7 @@ class View
 {
 protected:
 	static Console* console;
-	static int globalId;
 
-	int id;
 	Position position;
 	Size size;
 	Colors backColor;
@@ -27,8 +25,6 @@ public:
 	View();
 
 	virtual ~View();
-
-	int Id() const;
 
 	static Console* GetConsole();
 

@@ -3,6 +3,8 @@
 #include "Field.h"
 #include "Platform.h"
 
+class IPlayerPlatform;
+
 class Player
 {
 protected:
@@ -27,10 +29,9 @@ public:
 
 class HumanPlayer : public Player
 {
-	IPlayerPlatform* playerPlatfor;
+	IPlayerPlatform* playerPlatform{};
 public:
-	HumanPlayer();
-	HumanPlayer(IPlayerPlatform* playerPlatfor);
+	HumanPlayer(std::string name, IPlayerPlatform* playerPlatform);
 
 	IPlayerPlatform*& PlayerPlatfor();
 
@@ -41,7 +42,7 @@ public:
 class ComputerPlayer : public Player
 {
 public:
-	void SetFlotilla() override;
-	Point Shot() override;
+	void SetFlotilla() override {};
+	Point Shot() override { return Point{}; };
 };
 

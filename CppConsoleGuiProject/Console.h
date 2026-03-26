@@ -8,6 +8,7 @@
 
 class Console
 {
+protected:
 	HANDLE descriptorOutput;
 	HANDLE descriptorInput;
 
@@ -17,8 +18,8 @@ class Console
 public:
 	Console(std::string title = "");
 
-	HANDLE DescriptorOutput() const;
-	HANDLE DescriptorInput() const;
+	HANDLE DescriptorOutput();
+	HANDLE DescriptorInput();
 
 	void Clear();
 

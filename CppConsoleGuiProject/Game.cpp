@@ -1,23 +1,20 @@
 #include "Game.h"
 
-Game::Game()
-{
-	HumanPlayer* humanPlayer = new HumanPlayer();
-	players[0] = humanPlayer;
-
-	ComputerPlayer* computerPlayer = new ComputerPlayer();
-	players[1] = computerPlayer;
-}
-
 Game::Game(Platform* platform)
-	: platform{ platform }
-{
-	HumanPlayer* humanPlayer = new HumanPlayer();
+	: platform{ platform },
+	players{}{}
 
-}
+Game::Game() : Game(nullptr) {}
+
+
 
 void Game::Setup()
 {
+	std::string name{ this->platform->GamePlatform()->SetupGame() };
+
+	players[0] = new HumanPlayer(name, this->platform->PlayerPlatform());
+	players[1] = new ComputerPlayer();
+
 	for (auto player : players)
 		player->SetFlotilla();
 }
@@ -27,10 +24,14 @@ void Game::Process()
 	HitType hit;
 	Point point;
 
+	this->platform->GamePlatform()->ViewGame();
+
 	while (true)
 	{
 		point = players[currentPlayer]->Shot();
 		hit = players[!currentPlayer]->CheckShot(point);
+
+		this->platform->GamePlatform()->ViewShot(point, currentPlayer, hit);
 
 		if (hit == HitType::Destroy)
 		{

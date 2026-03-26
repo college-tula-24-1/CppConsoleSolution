@@ -48,3 +48,25 @@ HitType Player::CheckShot(Point point)
 				return HitType::Wound;
 		}
 }
+
+HumanPlayer::HumanPlayer(std::string name, 
+	IPlayerPlatform* playerPlatform)
+	: Player(name),
+	playerPlatform{ playerPlatform }{}
+
+IPlayerPlatform*& HumanPlayer::PlayerPlatfor()
+{
+	return playerPlatform;
+}
+
+void HumanPlayer::SetFlotilla()
+{
+	this->flotilla = this->playerPlatform->SetFlotilla();
+	this->battleField->SetShips(this->flotilla);
+}
+
+Point HumanPlayer::Shot()
+{
+	return this->playerPlatform->Shot();
+}
+
