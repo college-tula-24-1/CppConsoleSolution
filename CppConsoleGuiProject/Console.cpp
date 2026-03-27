@@ -27,6 +27,22 @@ HANDLE Console::DescriptorInput()
 	return this->descriptorInput;
 }
 
+void Console::CosoleWindowSize(int width, int height)
+{
+	COORD bufferSize;
+	bufferSize.X = width + 8;
+	bufferSize.Y = height + 4;
+
+	SMALL_RECT consoleSize;
+	consoleSize.Left = 0;
+	consoleSize.Top = 0;
+	consoleSize.Right = bufferSize.X - 1;
+	consoleSize.Bottom = bufferSize.Y - 1;
+	
+	SetConsoleScreenBufferSize(this->descriptorOutput, bufferSize);
+	SetConsoleWindowInfo(this->descriptorOutput, true, &consoleSize);
+}
+
 void Console::Clear()
 {
 	system("cls");

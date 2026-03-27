@@ -21,6 +21,8 @@ public:
 	HANDLE DescriptorOutput();
 	HANDLE DescriptorInput();
 
+	void CosoleWindowSize(int width, int height);
+
 	void Clear();
 
 	void CursorPosition(Position);
@@ -49,6 +51,6 @@ public:
 	Colors BackColor();
 
 	int GetChar();
-	int KeyPressed();
+	int KeyPressed(); 
 };
 

@@ -7,19 +7,23 @@ enum class GameChars
 	Deck = 219
 };
 
-class GameView : public View
+class GameView : public Window
 {
 protected:
 	int cellSize;
 public:
 	GameView(int cellSize);
 
-	void Show() override;
 };
 
 class FieldView : public Window
 {
-
+protected:
+	int cellSize;
+public:
+	FieldView(Position position, 
+		int cellSize, 
+		std::string title);
 };
 
 class ShipView : public View
