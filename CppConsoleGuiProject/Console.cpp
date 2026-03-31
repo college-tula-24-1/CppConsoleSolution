@@ -134,6 +134,12 @@ void Console::WritePosition(Position position, char symbol)
 	this->WritePosition(position, std::string(1, symbol));
 }
 
+void Console::WriteWidthPosition(Position position, int width, std::string message)
+{
+	message = std::string(width - message.length(), ' ') + message;
+	this->WritePosition(position, message);
+}
+
 void Console::ForeColor(Colors color)
 {
 	int backColor{ (int)this->BackColor() << 4 };

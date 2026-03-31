@@ -14,6 +14,7 @@ protected:
 public:
 	GameView(int cellSize);
 
+	void Show() override;
 };
 
 class FieldView : public Window
@@ -24,6 +25,8 @@ public:
 	FieldView(Position position, 
 		int cellSize, 
 		std::string title);
+
+	void Show() override;
 };
 
 class ShipView : public View

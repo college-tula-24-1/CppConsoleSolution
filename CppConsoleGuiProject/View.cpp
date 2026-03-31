@@ -42,6 +42,9 @@ View::View(Position position,
 {
 	bufferViewed = new CHAR_INFO[size.width * size.height];
 	bufferSaved = new CHAR_INFO[size.width * size.height];
+	
+	this->console->ForeColor(this->foreColor);
+	this->console->BackColor(this->backColor);
 }
 
 View::View(Position position, Size size)

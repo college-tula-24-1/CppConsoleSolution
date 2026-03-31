@@ -44,6 +44,8 @@ public:
 	void WritePosition(Position, const char*);
 	void WritePosition(Position, char);
 
+	void WriteWidthPosition(Position, int, std::string );
+
 	void ForeColor(Colors);
 	Colors ForeColor();
 
