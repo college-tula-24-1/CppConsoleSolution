@@ -61,3 +61,15 @@ enum class BorderIndex
 	Cross = 4
 };
 
+enum class Key
+{
+	ArrowLeft = 75,
+	ArrowRight = 77,
+	ArrowUp = 72,
+	ArrowDown = 80,
+
+	Enter = 13,
+	Space = 32,
+	Esc = 27
+};
+

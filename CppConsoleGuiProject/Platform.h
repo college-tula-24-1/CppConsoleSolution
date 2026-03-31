@@ -27,6 +27,6 @@ public:
 class IPlayerPlatform
 {
 public:
-	virtual std::vector<Ship*> SetFlotilla() = 0;
+	virtual std::vector<Ship*> SetFlotilla(std::string name) = 0;
 	virtual Point Shot() = 0;
 };

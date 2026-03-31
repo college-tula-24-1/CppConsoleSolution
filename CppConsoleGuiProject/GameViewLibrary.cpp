@@ -104,3 +104,40 @@ void FieldView::Show()
 
 			
 }
+
+SetupView::SetupView(int cellSize)
+	: Window(), cellSize{ cellSize }
+{
+	this->title = "Game Sea Battle";
+	this->style = BorderStyle::Double;
+
+	this->position = Position{ 2, 4 };
+
+	int fieldCellsCount{ 10 };
+	int widthScale{ 2 };
+	int margin{ 2 };
+
+	int width{ ((cellSize * fieldCellsCount) * 2 + margin * cellSize * 4 - 2) * widthScale };
+	int height{ cellSize * fieldCellsCount + margin * cellSize * 2 };
+
+	this->size = Size{ width, height };
+	this->backColor = Colors::Gray;
+	this->foreColor = Colors::Black;
+
+	this->bufferViewed = new CHAR_INFO[size.width * size.height];
+	this->bufferSaved = new CHAR_INFO[size.width * size.height];
+
+	this->console->CosoleWindowSize(width, height);
+}
+
+void SetupView::Show()
+{
+	Window::Show();
+
+	int row{ this->position.row + cellSize };
+	int column{ this->position.column + cellSize * 2 };
+
+	FieldView* playerView = new FieldView({ row, column }, cellSize, this->title);
+	playerView->Show();
+
+}

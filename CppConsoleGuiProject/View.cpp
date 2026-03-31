@@ -96,7 +96,18 @@ Colors View::BackColor() const
 }
 void View::BackColor(Colors backColor)
 {
+	bool currentVisible{ this->isVisible };
+
+	if (currentVisible)
+		this->Hide();
+
 	this->backColor = backColor;
+
+	this->BufferSavedInit();
+	this->BufferViewedInit();
+
+	if (currentVisible)
+		this->Show();
 }
 
 Colors View::ForeColor() const
@@ -106,7 +117,18 @@ Colors View::ForeColor() const
 
 void View::ForeColor(Colors foreColor)
 {
+	bool currentVisible{ this->isVisible };
+
+	if (currentVisible)
+		this->Hide();
+
 	this->foreColor = foreColor;
+
+	this->BufferSavedInit();
+	this->BufferViewedInit();
+
+	if (currentVisible)
+		this->Show();
 }
 
 bool View::IsVisible() const
@@ -116,14 +138,16 @@ bool View::IsVisible() const
 
 void View::Move(Position position)
 {
-	if (isVisible)
+	bool currentVisible{ this->isVisible };
+
+	if (currentVisible)
 		this->Hide();
 	
 	this->position = position;
 
 	this->BufferSavedInit();
 
-	if (isVisible)
+	if (currentVisible)
 		this->Show();
 
 }
@@ -135,7 +159,9 @@ void View::Move(int row, int column)
 
 void View::Resize(Size size)
 {
-	if (isVisible)
+	bool currentVisible{ this->isVisible };
+
+	if (currentVisible)
 		this->Hide();
 
 	this->size = size;
@@ -143,7 +169,7 @@ void View::Resize(Size size)
 	BufferSavedInit();
 	BufferViewedInit();
 
-	if (isVisible)
+	if (currentVisible)
 		this->Show();
 }
 
@@ -171,6 +197,8 @@ void View::Show()
 		bufferSize,
 		bufferPosition,
 		&screenPosition);
+	
+	this->isVisible = true;
 }
 
 void View::Hide()
@@ -189,6 +217,8 @@ void View::Hide()
 		bufferSize,
 		bufferPosition,
 		&screenPosition);
+
+	this->isVisible = false;
 }
 
 

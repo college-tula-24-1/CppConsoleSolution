@@ -17,6 +17,16 @@ public:
 	void Show() override;
 };
 
+class SetupView : public Window
+{
+protected:
+	int cellSize;
+public:
+	SetupView(int cellSize);
+
+	void Show() override;
+};
+
 class FieldView : public Window
 {
 protected:

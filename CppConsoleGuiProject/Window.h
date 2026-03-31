@@ -16,5 +16,7 @@ public:
 		BorderStyle style);
 
 	Window();
+
+	std::string& Title();
 };
 

@@ -50,3 +50,8 @@ Window::Window(Position position,
 
 Window::Window()
 	: Window({}, {}, Colors::Black, Colors::White, "", BorderStyle::None) {}
+
+std::string& Window::Title()
+{
+	return this->title;
+}
