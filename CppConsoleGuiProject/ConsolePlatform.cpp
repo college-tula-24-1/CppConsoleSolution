@@ -26,6 +26,8 @@ std::string ConsoleGamePlatform::SetupGame()
 	return name;
 }
 
+
+
 int ConsolePlayerPlatform::SelectShip()
 {
 	int columnOffset{ columnStart + fieldSize * cellSize * widthRate + (4 * margin * widthRate)};
@@ -140,7 +142,196 @@ int ConsolePlayerPlatform::SelectShip()
 		}
 	}
 
-	return currentShip;
+	return currentShip + 1;
+}
+
+Ship* ConsolePlayerPlatform::SetShip(int size)
+{
+	int top{ rowStart + margin * cellSize };
+	int bottom{ top + fieldSize * cellSize };
+	int left{ columnStart + margin * cellSize * widthRate };
+	int right{ left + fieldSize * cellSize * widthRate };
+
+	int width{ size * cellSize * widthRate };
+	int height{ cellSize };
+
+
+	int shipRow{ top };
+	int shipColumn{ left };
+	int row{}, column{};
+	bool direction{};
+
+	View* shipView = new View({ shipRow, shipColumn },
+		{ width, height },
+		Colors::Magenta,
+		Colors::White);
+
+	shipView->Show();
+	
+	Key key;
+	bool isQuit{};
+
+	Ship* ship{ nullptr };
+
+	while (true)
+	{
+		isQuit = false;
+		if (View::GetConsole()->KeyPressed())
+		{
+			key = (Key)View::GetConsole()->GetChar();
+			shipView->Hide();
+
+			switch (key)
+			{
+			case Key::ArrowLeft:
+				if (shipColumn > left)
+				{
+					shipColumn -= cellSize * widthRate;
+					column--;
+				}
+				break;
+			case Key::ArrowRight:
+				if (direction)
+				{
+					if (shipColumn < right - cellSize * widthRate)
+					{
+						shipColumn += cellSize * widthRate;
+						column++;
+					}
+						
+				}
+				else
+				{
+					if (shipColumn + size * widthRate * cellSize < right)
+					{
+						shipColumn += cellSize * widthRate;
+						column++;
+					}
+				}
+				break;
+			case Key::ArrowUp:
+				if (shipRow > top)
+				{
+					shipRow -= cellSize;
+					row--;
+				}
+				break;
+			case Key::ArrowDown:
+				if (direction)
+				{
+					if (shipRow + size * cellSize < bottom)
+					{
+						shipRow += cellSize;
+						row++;
+					}
+				}
+				else
+				{
+					if (shipRow < bottom - cellSize)
+					{
+						shipRow += cellSize;
+						row++;
+					}
+				}
+				break;
+			case Key::Enter:
+			{
+				DirectionShip dirShip = (direction) ?
+					DirectionShip::Vertical : DirectionShip::Horizontal;
+
+				ship = new Ship({ row, column }, size, dirShip);
+
+				isQuit = this->IsSetShip(ship);
+				
+				if (!isQuit)
+				{
+					delete ship;
+					ship = nullptr;
+				}
+				break;
+			}
+			case Key::Space:
+			{
+				direction = !direction;
+
+				int w = width;
+				width = height * 2;
+				height = w / 2;
+
+				shipView->Resize({ width, height });
+				break;
+			}
+			case Key::Esc:
+				isQuit = true;
+				break;
+			default:
+				break;
+			}
+
+			if (isQuit) break;
+
+			shipView->Move({ shipRow, shipColumn });
+			shipView->Show();
+		}
+	}
+
+	return ship;
+}
+
+void ConsolePlayerPlatform::ShipsShow()
+{
+	int top{ rowStart + margin * cellSize };
+	int left{ columnStart + margin * cellSize * widthRate };
+
+	for (Ship* ship : flotilla)
+	{
+		int shipRow{ top + ship->Row() * cellSize };
+		int shipColumn{ left + ship->Column() * cellSize * widthRate };
+		int shipWidth{ ship->Size() * cellSize * widthRate };
+		int shipHeight{ cellSize };
+
+		if (ship->Direction() == DirectionShip::Vertical)
+		{
+			int w = shipWidth;
+			shipWidth = shipHeight * 2;
+			shipHeight = w / 2;
+		}
+
+		View* shipView = new View({ shipRow, shipColumn },
+			{ shipWidth, shipHeight },
+			Colors::Green, Colors::White);
+		shipView->Show();
+	}
+}
+
+bool ConsolePlayerPlatform::IsSetShip(Ship* ship)
+{
+	bool isNotSet{ false };
+
+	for (Ship* s : flotilla)
+	{
+		int row{ ship->Row() };
+		int column{ ship->Column() };
+
+		for (int p{}; p < ship->Size(); p++)
+		{
+			for (int rowDx{ -1 }; rowDx < 2; rowDx++)
+			{
+				for (int columnDx{ -1 }; columnDx < 2; columnDx++)
+				{
+					isNotSet = s->IsPoint({ row + rowDx, column + columnDx });
+					if (isNotSet) break;
+				}
+				if (isNotSet) break;
+			}
+			if (isNotSet) break;
+
+			(ship->Direction() == DirectionShip::Horizontal) ? column++ : row++;
+		}
+		if (isNotSet) break;
+	}
+
+	return !isNotSet;
 }
 
 ConsolePlayerPlatform::ConsolePlayerPlatform()
@@ -160,15 +351,30 @@ ConsolePlayerPlatform::ConsolePlayerPlatform()
 
 std::vector<Ship*> ConsolePlayerPlatform::SetFlotilla(std::string name)
 {
-	SetupView* setFlotillaView = new SetupView(cellSize);
+	SetupView* setFlotillaView = new SetupView({rowStart, columnStart}, cellSize);
 	setFlotillaView->Title() = name;
 	setFlotillaView->Show();
 
-	this->SelectShip();
+	Ship* ship;
+	int selectShip;
 
-	setFlotillaView->GetConsole()->GetChar();
+	while (true)
+	{
+		selectShip = this->SelectShip();
+		ship = this->SetShip(selectShip);
+		if (ship)
+		{
+			flotilla.push_back(ship);
+			shipCounts[selectShip - 1]--;
+		}
+		this->ShipsShow();
+
+		int countsAll = std::accumulate(shipCounts.begin(), shipCounts.end(), 0);
+		if (!countsAll)
+			break;
+	}
+	
 	setFlotillaView->Hide();
 
-
-	return std::vector<Ship*>();
+	return flotilla;
 }

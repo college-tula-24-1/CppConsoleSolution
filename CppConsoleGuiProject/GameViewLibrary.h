@@ -22,7 +22,7 @@ class SetupView : public Window
 protected:
 	int cellSize;
 public:
-	SetupView(int cellSize);
+	SetupView(Position position, int cellSize);
 
 	void Show() override;
 };

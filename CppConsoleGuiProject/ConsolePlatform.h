@@ -1,9 +1,12 @@
 #pragma once
 #include <iostream>
 #include <array>
+#include <numeric>
+#include <ranges>
 
 #include "Platform.h"
 #include "GameViewLibrary.h"
+
 
 class ConsolePlatform
 {};
@@ -37,8 +40,8 @@ class ConsolePlayerPlatform : public IPlayerPlatform
 	int margin{ 2 };
 
 	int widthRate{ 2 };
-	int rowStart{ 3 };
-	int columnStart{ 5 };
+	int rowStart{ 2 };
+	int columnStart{ 4 };
 
 	int SelectShip();
 	Ship* SetShip(int size);

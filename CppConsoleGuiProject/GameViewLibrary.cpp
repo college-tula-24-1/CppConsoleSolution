@@ -105,13 +105,13 @@ void FieldView::Show()
 			
 }
 
-SetupView::SetupView(int cellSize)
+SetupView::SetupView(Position position, int cellSize)
 	: Window(), cellSize{ cellSize }
 {
 	this->title = "Game Sea Battle";
 	this->style = BorderStyle::Double;
 
-	this->position = Position{ 2, 4 };
+	this->position = position;
 
 	int fieldCellsCount{ 10 };
 	int widthScale{ 2 };
