@@ -11,5 +11,5 @@ int main()
         new ConsolePlayerPlatform()));
 
     game->Setup();
-    //game->Process();
+    game->Process();
 }

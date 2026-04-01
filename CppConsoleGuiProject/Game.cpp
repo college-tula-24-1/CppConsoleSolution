@@ -26,20 +26,20 @@ void Game::Process()
 
 	this->platform->GamePlatform()->ViewGame();
 
-	while (true)
-	{
-		point = players[currentPlayer]->Shot();
-		hit = players[!currentPlayer]->CheckShot(point);
+	//while (true)
+	//{
+	//	point = players[currentPlayer]->Shot();
+	//	hit = players[!currentPlayer]->CheckShot(point);
 
-		this->platform->GamePlatform()->ViewShot(point, currentPlayer, hit);
+	//	this->platform->GamePlatform()->ViewShot(point, currentPlayer, hit);
 
-		if (hit == HitType::Destroy)
-		{
-			if (players[!currentPlayer]->FlotillaSize() == 0)
-				break;
-		}
+	//	if (hit == HitType::Destroy)
+	//	{
+	//		if (players[!currentPlayer]->FlotillaSize() == 0)
+	//			break;
+	//	}
 
-		if (hit == HitType::Beside)
-			currentPlayer = !currentPlayer;
-	}
+	//	if (hit == HitType::Beside)
+	//		currentPlayer = !currentPlayer;
+	//}
 }

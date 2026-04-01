@@ -1,7 +1,9 @@
 #include "GameViewLibrary.h"
 
-GameView::GameView(int cellSize)
-	: Window(), cellSize{cellSize}
+GameView::GameView(std::string humanPlayerName, int cellSize)
+	: Window(),
+	humanPlayerName{ humanPlayerName },
+	cellSize{cellSize}
 {
 	this->title = "Game Sea Battle";
 	this->style = BorderStyle::Double;
@@ -33,7 +35,7 @@ void GameView::Show()
 	int row{ this->position.row + cellSize };
 	int column{ this->position.column + cellSize * 2 };
 	
-	FieldView* playerView = new FieldView({ row, column }, cellSize, "Player");
+	FieldView* playerView = new FieldView({ row, column }, cellSize, this->humanPlayerName);
 	playerView->Show();
 
 	int fieldCellsCount{ 14 };

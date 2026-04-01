@@ -61,7 +61,19 @@ IPlayerPlatform*& HumanPlayer::PlayerPlatfor()
 
 void HumanPlayer::SetFlotilla()
 {
-	this->flotilla = this->playerPlatform->SetFlotilla(this->Name());
+	//this->flotilla = this->playerPlatform->SetFlotilla(this->Name());
+
+	this->flotilla.push_back(new Ship({ 0, 1 }, 1, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 1, 5 }, 4, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 3, 9 }, 3, DirectionShip::Vertical));
+	this->flotilla.push_back(new Ship({ 4, 3 }, 1, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 4, 6 }, 2, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 5, 0 }, 2, DirectionShip::Vertical));
+	this->flotilla.push_back(new Ship({ 6, 5 }, 1, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 8, 0 }, 2, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 8, 7 }, 3, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 9, 4 }, 1, DirectionShip::Horizontal));
+
 	this->battleField->SetShips(this->flotilla);
 }
 
@@ -70,3 +82,16 @@ Point HumanPlayer::Shot()
 	return this->playerPlatform->Shot();
 }
 
+void ComputerPlayer::SetFlotilla()
+{
+	this->flotilla.push_back(new Ship({ 0, 1 }, 1, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 1, 5 }, 4, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 3, 9 }, 3, DirectionShip::Vertical));
+	this->flotilla.push_back(new Ship({ 4, 3 }, 1, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 4, 6 }, 2, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 5, 0 }, 2, DirectionShip::Vertical));
+	this->flotilla.push_back(new Ship({ 6, 5 }, 1, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 8, 0 }, 2, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 8, 7 }, 3, DirectionShip::Horizontal));
+	this->flotilla.push_back(new Ship({ 9, 4 }, 1, DirectionShip::Horizontal));
+}

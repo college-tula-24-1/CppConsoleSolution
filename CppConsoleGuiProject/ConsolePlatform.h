@@ -23,7 +23,7 @@ class ConsoleGamePlatform : public IGamePlatform
 
 public:
 	std::string SetupGame() override;
-	void ViewGame() override {};
+	void ViewGame() override;
 	void ViewShot(Point point, bool currentPlayer, HitType type) override {};
 	void GameOver() override {};
 };

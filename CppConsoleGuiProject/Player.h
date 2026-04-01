@@ -42,7 +42,7 @@ public:
 class ComputerPlayer : public Player
 {
 public:
-	void SetFlotilla() override {};
+	void SetFlotilla() override;
 	Point Shot() override { return Point{}; };
 };
 

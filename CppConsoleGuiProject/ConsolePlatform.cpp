@@ -26,6 +26,14 @@ std::string ConsoleGamePlatform::SetupGame()
 	return name;
 }
 
+void ConsoleGamePlatform::ViewGame()
+{
+	GameView* gameView = new GameView(cellSize);
+	gameView->Show();
+
+	View::GetConsole()->GetChar();
+}
+
 
 
 int ConsolePlayerPlatform::SelectShip()

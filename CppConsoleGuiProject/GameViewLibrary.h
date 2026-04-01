@@ -11,8 +11,9 @@ class GameView : public Window
 {
 protected:
 	int cellSize;
+	std::string humanPlayerName;
 public:
-	GameView(int cellSize);
+	GameView(std::string humanPlayerName, int cellSize);
 
 	void Show() override;
 };
