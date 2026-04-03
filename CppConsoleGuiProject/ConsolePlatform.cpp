@@ -1,5 +1,38 @@
 #include "ConsolePlatform.h"
 
+void ConsoleGamePlatform::FlotillaShow()
+{
+	Player* humanPlayer{ this->game->Players()[0] };
+	
+	int top{ rowStart + margin * cellSize - 1 };
+	int left{ columnStart + margin * cellSize * widthRate - 1 };
+
+	for (Ship* ship : humanPlayer->Flotilla())
+	{
+		int shipRow{ top + ship->Row() * cellSize };
+		int shipColumn{ left + ship->Column() * cellSize * widthRate };
+		int shipWidth{ ship->Size() * cellSize * widthRate };
+		int shipHeight{ cellSize };
+
+		if (ship->Direction() == DirectionShip::Vertical)
+		{
+			int w = shipWidth;
+			shipWidth = shipHeight * 2;
+			shipHeight = w / 2;
+		}
+
+		View* shipView = new View({ shipRow, shipColumn },
+			{ shipWidth, shipHeight },
+			Colors::Green, Colors::White);
+		shipView->Show();
+	}
+}
+
+void ConsoleGamePlatform::SetGame(Game* game)
+{
+	this->game = game;
+}
+
 std::string ConsoleGamePlatform::SetupGame()
 {
 	Window* welcomeWindow = new Window({ rowStart, columnStart },
@@ -26,12 +59,38 @@ std::string ConsoleGamePlatform::SetupGame()
 	return name;
 }
 
-void ConsoleGamePlatform::ViewGame()
+void ConsoleGamePlatform::GameShow()
 {
-	GameView* gameView = new GameView(cellSize);
+	this->gameView = new GameView(this->game->Players(), cellSize);
 	gameView->Show();
 
+	this->FlotillaShow();
+
 	View::GetConsole()->GetChar();
+}
+
+void ConsoleGamePlatform::ShotShow(Point point, bool currentPlayer, HitType type)
+{
+	FieldView* fieldView = this->gameView->Fields()[!currentPlayer];
+	Field* field = this->gameView->Players()[!currentPlayer]->BattleField();
+
+	int row{ fieldView->Row() + (point.row + 1) * cellSize };
+	int column{ fieldView->Column() + (point.column + 1) * cellSize * widthRate };
+
+	char shotChar = (char)((field->GetCell(point)->Type() == CellType::Water) ?
+						GameChars::Water : GameChars::Deck);
+
+	View::GetConsole()->ForeColor(Colors::Red);
+	for(int i{}; i < cellSize; i++)
+		View::GetConsole()->WritePosition({ row + i, column }, std::string(cellSize * widthRate, shotChar));
+
+	//View* shotView = new View(
+	//	{ fieldView->Row() + (point.row + 1) * cellSize,
+	//	  fieldView->Column() + (point.column + 1) * cellSize * widthRate },
+	//	{ cellSize * widthRate, cellSize },
+	//	Colors::Red, Colors::Red);
+	//shotView->Show();
+	//delete shotView;
 }
 
 
@@ -385,4 +444,72 @@ std::vector<Ship*> ConsolePlayerPlatform::SetFlotilla(std::string name)
 	setFlotillaView->Hide();
 
 	return flotilla;
+}
+
+Point ConsolePlayerPlatform::Shot()
+{
+	int top{ rowStart + 2 * cellSize };
+	int left{ columnStart + 
+		2 * margin * cellSize * widthRate + 
+		(fieldSize + 1) * cellSize * widthRate };
+	int bottom{ top + fieldSize * cellSize };
+	int right{ left + fieldSize * cellSize * widthRate };
+
+	View* cursorView = new View({ top, left },
+		{ cellSize * widthRate, cellSize },
+		Colors::Cyan, Colors::White);
+	cursorView->Show();
+
+	Key key;
+	bool isShot;
+
+	int row{};
+	int column{};
+
+	while (true)
+	{
+		if (View::GetConsole()->KeyPressed())
+		{
+			key = (Key)View::GetConsole()->GetChar();
+			//cursorView->Hide();
+			isShot = false;
+			switch (key)
+			{
+			case Key::ArrowLeft:
+				if (column > 0)
+					column--;
+				break;
+			case Key::ArrowRight:
+				if (column < fieldSize - 1)
+					column++;
+				break;
+			case Key::ArrowUp:
+				if (row > 0)
+					row--;
+				break;
+			case Key::ArrowDown:
+				if (row < fieldSize - 1)
+					row++;
+				break;
+			case Key::Enter:
+			case Key::Space:
+				isShot = true;
+				break;
+			case Key::Esc:
+				break;
+			default:
+				break;
+			}
+			
+			if (isShot)
+				break;
+
+			cursorView->Move({ top + row * cellSize, left + column * cellSize * widthRate });
+		}
+	}
+
+	cursorView->Hide();
+	delete cursorView;
+	
+	return Point{ row, column };
 }

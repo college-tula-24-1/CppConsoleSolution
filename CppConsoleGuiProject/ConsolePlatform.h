@@ -6,6 +6,7 @@
 
 #include "Platform.h"
 #include "GameViewLibrary.h"
+#include "Game.h"
 
 
 class ConsolePlatform
@@ -13,6 +14,9 @@ class ConsolePlatform
 
 class ConsoleGamePlatform : public IGamePlatform
 {
+	Game* game;
+	GameView* gameView;
+
 	int fieldSize{ 10 };
 	int cellSize{ 2 };
 	int margin{ 2 };
@@ -21,10 +25,14 @@ class ConsoleGamePlatform : public IGamePlatform
 	int rowStart{ 3 };
 	int columnStart{ 5 };
 
+	void FlotillaShow();
+
 public:
+	void SetGame(Game* game);
+
 	std::string SetupGame() override;
-	void ViewGame() override;
-	void ViewShot(Point point, bool currentPlayer, HitType type) override {};
+	void GameShow() override;
+	void ShotShow(Point point, bool currentPlayer, HitType type) override;
 	void GameOver() override {};
 };
 
@@ -51,6 +59,6 @@ public:
 	ConsolePlayerPlatform();
 
 	std::vector<Ship*> SetFlotilla(std::string name) override;
-	Point Shot() override { return {}; }
+	Point Shot() override;
 };
 

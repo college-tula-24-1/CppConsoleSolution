@@ -15,6 +15,8 @@ public:
 	Game();
 	Game(Platform* platform);
 
+	std::array<Player*, 2> Players();
+
 	void Setup();
 	void Process();
 };

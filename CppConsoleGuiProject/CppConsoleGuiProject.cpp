@@ -6,9 +6,15 @@
 
 int main()
 {
+    ConsoleGamePlatform* consoleGamePlatform
+        = new ConsoleGamePlatform();
+
     Game* game = new Game(new Platform(
-        new ConsoleGamePlatform(),
+        consoleGamePlatform,
         new ConsolePlayerPlatform()));
+
+    consoleGamePlatform->SetGame(game);
+
 
     game->Setup();
     game->Process();

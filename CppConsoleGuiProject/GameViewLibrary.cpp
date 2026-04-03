@@ -1,8 +1,8 @@
 #include "GameViewLibrary.h"
 
-GameView::GameView(std::string humanPlayerName, int cellSize)
+GameView::GameView(std::array<Player*, 2> players, int cellSize)
 	: Window(),
-	humanPlayerName{ humanPlayerName },
+	players{ players },
 	cellSize{cellSize}
 {
 	this->title = "Game Sea Battle";
@@ -26,28 +26,40 @@ GameView::GameView(std::string humanPlayerName, int cellSize)
 
 	this->console->CosoleWindowSize(width, height);
 
+	// create fields
+	int row{ this->position.row + cellSize };
+	int column{ this->position.column + cellSize * 2 };
+
+	std::string name = players[0]->Name();
+	FieldView* humanField = new FieldView({ row, column }, cellSize, name);
+	this->fields[0] = humanField;
+
+	column = this->position.column
+		+ (fieldCellsCount + 2 * margin) * cellSize * 2;
+
+	name = players[1]->Name();
+	FieldView* computerField = new FieldView({ row, column }, cellSize, name);
+	this->fields[1] = computerField;
 }
 
 void GameView::Show()
 {
 	Window::Show();
 
-	int row{ this->position.row + cellSize };
-	int column{ this->position.column + cellSize * 2 };
-	
-	FieldView* playerView = new FieldView({ row, column }, cellSize, this->humanPlayerName);
-	playerView->Show();
-
-	int fieldCellsCount{ 14 };
-	int margin{ 2 };
-
-	column = this->position.column
-		+ fieldCellsCount * cellSize * 2;
-
-	FieldView* computerField = new FieldView({ row, column }, cellSize, "Computer");
-	computerField->Show();
-
+	for (FieldView* fieldView : this->fields)
+		fieldView->Show();
 }
+
+std::array<FieldView*, 2> GameView::Fields()
+{
+	return this->fields;
+}
+
+std::array<Player*, 2> GameView::Players()
+{
+	return this->players;
+}
+
 
 FieldView::FieldView(Position position,
 	int cellSize, 
