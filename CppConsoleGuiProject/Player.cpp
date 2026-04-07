@@ -94,6 +94,8 @@ void ComputerPlayer::SetFlotilla()
 	this->flotilla.push_back(new Ship({ 8, 0 }, 2, DirectionShip::Horizontal));
 	this->flotilla.push_back(new Ship({ 8, 7 }, 3, DirectionShip::Horizontal));
 	this->flotilla.push_back(new Ship({ 9, 4 }, 1, DirectionShip::Horizontal));
+
+	this->battleField->SetShips(this->flotilla);
 }
 
 Point ComputerPlayer::Shot()

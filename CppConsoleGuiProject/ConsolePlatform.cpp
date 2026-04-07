@@ -66,7 +66,7 @@ void ConsoleGamePlatform::GameShow()
 
 	this->FlotillaShow();
 
-	View::GetConsole()->GetChar();
+	//View::GetConsole()->GetChar();
 }
 
 void ConsoleGamePlatform::ShotShow(Point point, bool currentPlayer, HitType type)
@@ -81,6 +81,7 @@ void ConsoleGamePlatform::ShotShow(Point point, bool currentPlayer, HitType type
 						GameChars::Water : GameChars::Deck);
 
 	View::GetConsole()->ForeColor(Colors::Red);
+	View::GetConsole()->BackColor(Colors::White);
 	for(int i{}; i < cellSize; i++)
 		View::GetConsole()->WritePosition({ row + i, column }, std::string(cellSize * widthRate, shotChar));
 
@@ -485,7 +486,7 @@ Point ConsolePlayerPlatform::Shot()
 				break;
 			case Key::ArrowUp:
 				if (row > 0)
-					row--;
+					row--;				
 				break;
 			case Key::ArrowDown:
 				if (row < fieldSize - 1)
