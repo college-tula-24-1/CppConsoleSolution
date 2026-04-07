@@ -15,7 +15,6 @@ int main()
 
     consoleGamePlatform->SetGame(game);
 
-
     game->Setup();
     game->Process();
 }

@@ -449,6 +449,7 @@ std::vector<Ship*> ConsolePlayerPlatform::SetFlotilla(std::string name)
 
 Point ConsolePlayerPlatform::Shot()
 {
+	View::GetConsole()->CursorVisible(false);
 	int top{ rowStart + 2 * cellSize };
 	int left{ columnStart + 
 		2 * margin * cellSize * widthRate + 
@@ -479,18 +480,26 @@ Point ConsolePlayerPlatform::Shot()
 			case Key::ArrowLeft:
 				if (column > 0)
 					column--;
+				else
+					column = fieldSize - 1;
 				break;
 			case Key::ArrowRight:
 				if (column < fieldSize - 1)
 					column++;
+				else
+					column = 0;
 				break;
 			case Key::ArrowUp:
 				if (row > 0)
-					row--;				
+					row--;
+				else
+					row = fieldSize - 1;
 				break;
 			case Key::ArrowDown:
 				if (row < fieldSize - 1)
 					row++;
+				else
+					row = 0;
 				break;
 			case Key::Enter:
 			case Key::Space:
